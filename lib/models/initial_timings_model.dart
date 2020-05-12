@@ -6,10 +6,9 @@ class InitialTimingModel {
   final String title;
 
   InitialTimingModel(this.timing, this.increment, this.title);
-
-  static List<CustomTiming> getTimingsList() {
-    List<CustomTiming> timings = List();
-    timings.add(CustomTiming(
+  
+  static List<CustomTiming> initialTimings = [
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 1,
         atimeSec: 0,
@@ -20,8 +19,8 @@ class InitialTimingModel {
         bInc: 0,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Bullet'));
-    timings.add(CustomTiming(
+        clockName: 'Bullet'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 1,
         atimeSec: 0,
@@ -32,8 +31,8 @@ class InitialTimingModel {
         bInc: 3,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Bullet'));
-    timings.add(CustomTiming(
+        clockName: 'Bullet'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 1,
         atimeSec: 0,
@@ -44,8 +43,8 @@ class InitialTimingModel {
         bInc: 5,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Bullet'));
-    timings.add(CustomTiming(
+        clockName: 'Bullet'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 3,
         atimeSec: 0,
@@ -56,8 +55,8 @@ class InitialTimingModel {
         bInc: 0,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Blitz'));
-    timings.add(CustomTiming(
+        clockName: 'Blitz'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 3,
         atimeSec: 0,
@@ -68,9 +67,8 @@ class InitialTimingModel {
         bInc: 3,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Blitz'));
-
-    timings.add(CustomTiming(
+        clockName: 'Blitz'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 3,
         atimeSec: 0,
@@ -81,8 +79,8 @@ class InitialTimingModel {
         bInc: 5,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Blitz'));
-    timings.add(CustomTiming(
+        clockName: 'Blitz'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 5,
         atimeSec: 0,
@@ -93,8 +91,8 @@ class InitialTimingModel {
         bInc: 0,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Blitz'));
-    timings.add(CustomTiming(
+        clockName: 'Blitz'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 5,
         atimeSec: 0,
@@ -105,9 +103,8 @@ class InitialTimingModel {
         bInc: 5,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Blitz'));
-
-    timings.add(CustomTiming(
+        clockName: 'Blitz'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 5,
         atimeSec: 0,
@@ -118,9 +115,8 @@ class InitialTimingModel {
         bInc: 5,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Blitz'));
-
-    timings.add(CustomTiming(
+        clockName: 'Blitz'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 10,
         atimeSec: 0,
@@ -131,9 +127,8 @@ class InitialTimingModel {
         bInc: 0,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Rapid'));
-
-    timings.add(CustomTiming(
+        clockName: 'Rapid'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 10,
         atimeSec: 0,
@@ -144,9 +139,8 @@ class InitialTimingModel {
         bInc: 10,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Rapid'));
-
-    timings.add(CustomTiming(
+        clockName: 'Rapid'),
+    CustomTiming(
         atimeHours: 0,
         atimeMins: 15,
         atimeSec: 0,
@@ -157,8 +151,6 @@ class InitialTimingModel {
         bInc: 15,
         aDelay: 0,
         bDelay: 0,
-        clockName: 'Rapid'));
-
-    return timings;
-  }
+        clockName: 'Rapid'),
+  ];
 }

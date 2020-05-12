@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:liclock/providers/chess_timer.dart';
 import 'package:path_provider/path_provider.dart' as path_prov;
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:liclock/models/custom_timing_podo.dart';
-import 'package:provider/provider.dart';
 import 'screens/landing_screen.dart';
 
 void main() async {
@@ -39,8 +37,9 @@ class _MyAppState extends State<MyApp> {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return Text('Error');
-            } else
+            } else {
               return LandingScreen();
+            }
           } else
             return Scaffold(
               body: Center(

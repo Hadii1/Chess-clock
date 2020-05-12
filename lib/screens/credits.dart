@@ -26,21 +26,22 @@ class CreditScreen extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                      text: '• Rate Us',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w300,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          LaunchReview.launch();
-                        }),
+                    text: '• Rate Us',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w300,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        LaunchReview.launch();
+                      },
+                  ),
                   TextSpan(
                     text: ' on Google play.',
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

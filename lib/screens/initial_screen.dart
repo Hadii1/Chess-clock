@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liclock/funcs.dart';
+import 'package:liclock/models/custom_timing_podo.dart';
 import 'package:liclock/models/initial_timings_model.dart';
 import 'package:liclock/providers/chess_timer.dart';
 import 'package:liclock/widgets/playing_clock.dart';
@@ -16,11 +16,16 @@ class InitialScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: GridView.count(
-                crossAxisCount: 3,
-                children: <Widget>[
-                  ...buildInitialTimingElements(prov, context)
-                ],
+              child: GridView.builder(
+                itemCount: InitialTimingModel.initialTimings.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3),
+                itemBuilder: (_, index) {
+                  return TimingSqaure(
+                    prov,
+                    InitialTimingModel.initialTimings[index],
+                  );
+                },
               ),
             ),
             Container(
@@ -45,48 +50,55 @@ class InitialScreen extends StatelessWidget {
   }
 }
 
-List<Widget> buildInitialTimingElements(var prov, BuildContext context) {
-  return InitialTimingModel.getTimingsList()
-      .map((element) => Card(
-            child: InkResponse(
-              onTap: () {
-                initializeProviderValues(element, prov);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) {
-                      return PlayerCards();
-                    },
-                  ),
-                );
+class TimingSqaure extends StatelessWidget {
+  const TimingSqaure(
+    this.prov,
+    this.timing,
+  );
+  final ChessTimerProvider prov;
+  final CustomTiming timing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkResponse(
+        onTap: () {
+          prov.initValues(timing);
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) {
+                return PlayerCards(prov);
               },
-              child: GridTile(
-                child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        shape: BoxShape.rectangle,
-                        border: Border.all(width: 0.5, color: Colors.black87),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.white,
-                              blurRadius: 20,
-                              spreadRadius: 5)
-                        ]),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '${element.atimeMins} + ${element.aInc}',
-                          style: TextStyle(
-                              fontSize: 21, fontWeight: FontWeight.w300),
-                        ),
-                        Text(
-                          '${element.clockName}',
-                        ),
-                      ],
-                    )),
-              ),
             ),
-          ))
-      .toList();
+          );
+        },
+        child: GridTile(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              shape: BoxShape.rectangle,
+              border: Border.all(width: 0.5, color: Colors.black87),
+              boxShadow: [
+                BoxShadow(color: Colors.white, blurRadius: 20, spreadRadius: 5)
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '${timing.atimeMins} + ${timing.aInc}',
+                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.w300),
+                ),
+                Text(
+                  '${timing.clockName}',
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:liclock/providers/chess_timer.dart';
-import 'package:provider/provider.dart';
 
 class PlayerCards extends StatefulWidget {
+  const PlayerCards(this.chessTimerProvider);
+  final chessTimerProvider;
+
   @override
   _PlayerCardsState createState() => _PlayerCardsState();
 }
 
 class _PlayerCardsState extends State<PlayerCards> with WidgetsBindingObserver {
-  var prov;
+  ChessTimerProvider prov;
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    prov = widget.chessTimerProvider;
     super.initState();
   }
 
@@ -33,7 +36,6 @@ class _PlayerCardsState extends State<PlayerCards> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    prov = Provider.of<ChessTimerProvider>(context);
     return Scaffold(
         body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -41,7 +43,6 @@ class _PlayerCardsState extends State<PlayerCards> with WidgetsBindingObserver {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
           Expanded(
-
               //B CARD:
               flex: 4,
               child: RotatedBox(
@@ -147,7 +148,13 @@ class _PlayerCardsState extends State<PlayerCards> with WidgetsBindingObserver {
                   padding: EdgeInsets.only(left: 4),
                   alignment: Alignment.centerLeft,
                   child: RotatedBox(
-                      quarterTurns: 1, child: Text('Moves: ${prov.moves}',style: TextStyle(fontWeight: FontWeight.w300,fontSize: 14),),),
+                    quarterTurns: 1,
+                    child: Text(
+                      'Moves: ${prov.moves}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w300, fontSize: 14),
+                    ),
+                  ),
                 ),
               ],
             ),

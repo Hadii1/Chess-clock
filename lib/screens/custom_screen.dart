@@ -4,7 +4,6 @@ import 'package:liclock/providers/chess_timer.dart';
 import 'package:hive/hive.dart';
 import 'package:liclock/widgets/playing_clock.dart';
 import 'package:provider/provider.dart';
-import '../funcs.dart';
 import 'custom_timing_screen.dart';
 
 class CustomScreen extends StatelessWidget {
@@ -57,23 +56,24 @@ class CustomScreen extends StatelessWidget {
   }
 }
 
-Widget buildCustomTimingelements(CustomTiming element, BuildContext context) {
+Widget buildCustomTimingelements(CustomTiming timing, BuildContext context) {
   final prov = Provider.of<ChessTimerProvider>(context);
   return Card(
     child: GridTile(
       child: InkResponse(
         onTap: () {
-          initializeProviderValues(element, prov);
+          prov.initValues(timing);
+
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) {
-                return PlayerCards();
+                return PlayerCards(prov);
               },
             ),
           );
         },
-        onLongPress: () => _showDialog(context, element),
+        onLongPress: () => _showDialog(context, timing),
         child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
@@ -87,7 +87,7 @@ Widget buildCustomTimingelements(CustomTiming element, BuildContext context) {
                   )
                 ]),
             child: Center(
-              child: Text('${element.clockName}',
+              child: Text('${timing.clockName}',
                   style: TextStyle(
                     fontSize: 18,
                   )),

@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:liclock/models/custom_timing_podo.dart';
 import 'package:quiver/async.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:liclock/extension_util.dart';
 
 class ChessTimerProvider with ChangeNotifier {
   //100 and 0 means nothing, just to avoid null
@@ -14,6 +16,29 @@ class ChessTimerProvider with ChangeNotifier {
     audioCache.load('tick.mp3');
     audioCache.load('meow.mp3');
   }
+
+  void initValues(CustomTiming timing) {
+    int atimeMs, btimeMs;
+    reset();
+    atimeMs =
+        (timing.atimeHours * 3600 + timing.atimeMins * 60 + timing.atimeSec) *
+            1000;
+    btimeMs =
+        (timing.btimeHours * 3600 + timing.btimeMins * 60 + timing.btimeSec) *
+            1000;
+
+    atotalMs = atimeMs;
+    btotalMs = btimeMs;
+    ainc = timing.aInc;
+    binc = timing.bInc;
+    aDelay = timing.aDelay;
+    bDelay = timing.bDelay;
+    atemp = atimeMs;
+    btemp = btimeMs;
+    atextShown = ('${atimeMs.format()}');
+    btextShown = ('${btimeMs.format()}');
+  }
+
   // 100 & 0 just for avoiding null
   int _btotalMs = 100;
   int _atotalMs = 100;
@@ -33,6 +58,7 @@ class ChessTimerProvider with ChangeNotifier {
 
   String _atextShown = '';
   String _btextShown = '';
+
   set atemp(int number) {
     _atemp = number;
     notifyListeners();
@@ -108,21 +134,21 @@ class ChessTimerProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  get atotalMs => _atotalMs;
-  get btotalMs => _btotalMs;
-  get aDelay => _adelay;
-  get bDelay => _bdelay;
-  get atextShown => _atextShown;
-  get btextShown => _btextShown;
-  get playing => _playing;
-  get aturn => _aturn;
-  get btimeEnded => _btimeEnded;
-  get atimeEnded => _atimeEnded;
-  get aInc => _ainc;
-  get bInc => _binc;
-  get moves => _moves;
-  get atemp => _atemp;
-  get btemp => _btemp;
+  int get atotalMs => _atotalMs;
+  int get btotalMs => _btotalMs;
+  int get aDelay => _adelay;
+  int get bDelay => _bdelay;
+  String get atextShown => _atextShown;
+  String get btextShown => _btextShown;
+  bool get playing => _playing;
+  bool get aturn => _aturn;
+  bool get btimeEnded => _btimeEnded;
+  bool get atimeEnded => _atimeEnded;
+  int get aInc => _ainc;
+  int get bInc => _binc;
+  int get moves => _moves;
+  int get atemp => _atemp;
+  int get btemp => _btemp;
 
   CountdownTimer _acountdownTimer;
   CountdownTimer _bcountdownTimer;
@@ -132,37 +158,6 @@ class ChessTimerProvider with ChangeNotifier {
 
   StreamSubscription<CountdownTimer> _alistener;
   StreamSubscription<CountdownTimer> _blistener;
-
-  String timeFormat(int totalMillis) {
-    double totalSec = totalMillis / 1000;
-    int hours = totalSec ~/ 3600;
-    int mins = (totalSec - hours * 3600) ~/ 60;
-    double sec = totalSec - hours * 3600 - mins * 60;
-    if (hours == 0) {
-      if (mins == 0) {
-        if (sec < 1) {
-          return sec.toString();
-        }
-        return _formatSeconds(sec);
-      }
-      return ('${_format(mins)}:${_format(sec.toInt())}');
-    }
-    return ('$hours:${_format(mins)}:${_format(sec.toInt())}');
-  }
-
-  String _format(int number) {
-    String formatedNumber;
-    number.toString().length == 1
-        ? formatedNumber = '0$number'
-        : formatedNumber = '${number.toString()}';
-    return formatedNumber;
-  }
-
-  String _formatSeconds(double number) {
-    return number.toInt().toString().length == 1
-        ? number.toString().substring(0, 3)
-        : number.toString().substring(0, 4);
-  }
 
   cardPressed(String player) {
     audioCache.play('tick.mp3', mode: PlayerMode.LOW_LATENCY);
@@ -178,7 +173,7 @@ class ChessTimerProvider with ChangeNotifier {
         _acountdownTimer.cancel();
       }
 
-      atextShown = (timeFormat(_atemp));
+      atextShown = (_atemp.format());
       _startTimer(2);
     } else {
       moves++;
@@ -191,7 +186,7 @@ class ChessTimerProvider with ChangeNotifier {
         _bcountdownTimer.cancel();
       }
 
-      btextShown = timeFormat(_btemp);
+      btextShown = _btemp.format();
       _startTimer(1);
     }
   }
@@ -294,8 +289,8 @@ class ChessTimerProvider with ChangeNotifier {
     _firstStart = true;
     atemp = atotalMs;
     btemp = btotalMs;
-    atextShown = timeFormat(atotalMs);
-    btextShown = timeFormat(btotalMs);
+    atextShown = atotalMs.format();
+    btextShown = btotalMs.format();
   }
 
   _initializeAListener() {
@@ -310,7 +305,7 @@ class ChessTimerProvider with ChangeNotifier {
         disposeTimers();
         return;
       }
-      atextShown = timeFormat(_acountdownTimer.remaining.inMilliseconds);
+      atextShown = _acountdownTimer.remaining.inMilliseconds.format();
     });
   }
 
@@ -326,7 +321,7 @@ class ChessTimerProvider with ChangeNotifier {
         disposeTimers();
         return;
       }
-      btextShown = timeFormat(_bcountdownTimer.remaining.inMilliseconds);
+      btextShown = _bcountdownTimer.remaining.inMilliseconds.format();
     });
   }
 
