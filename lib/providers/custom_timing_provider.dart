@@ -6,7 +6,7 @@ import 'dart:math';
 class CustomTimingProvider with ChangeNotifier {
   bool _equalTiming = true;
   String _clockName;
-  Box customTimingsBox = Hive.box('Custom Timings');
+  Box customTimingsBox = Hive.box<CustomTiming>('Custom Timings');
 
   void saveData() {
     if (clockName == null) {

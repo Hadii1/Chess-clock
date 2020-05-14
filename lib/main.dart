@@ -26,29 +26,35 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
-      theme: Theme.of(context).copyWith(
+      theme: ThemeData(
         accentColor: Colors.orange,
         splashColor: Colors.orange.withOpacity(0.2),
       ),
       title: 'Hadi Chess Clock',
-      home: FutureBuilder(
-        future: _initHive(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Text('Error');
-            } else {
-              return LandingScreen();
-            }
-          } else
-            return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.black87,
-                ),
-              ),
-            );
-        },
+      home: DbInitialization(),
+    );
+  }
+}
+
+class DbInitialization extends StatefulWidget {
+  DbInitialization({Key key}) : super(key: key);
+
+  @override
+  _DbInitializationState createState() => _DbInitializationState();
+}
+
+class _DbInitializationState extends State<DbInitialization> {
+  @override
+  void initState() {
+    _initHive();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
@@ -57,6 +63,17 @@ class _MyAppState extends State<MyApp> {
     final documentDir = await path_prov.getApplicationDocumentsDirectory();
     Hive.init(documentDir.path);
     Hive.registerAdapter(CustomTimingAdapter());
-    Hive.openBox('Custom Timings');
+    Hive.openBox<CustomTiming>('Custom Timings');
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) {
+              return LandingScreen();
+            },
+          ),
+        );
+      },
+    );
   }
 }

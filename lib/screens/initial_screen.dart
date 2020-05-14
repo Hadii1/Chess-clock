@@ -9,7 +9,6 @@ import 'credits.dart';
 class InitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final prov = Provider.of<ChessTimerProvider>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(6),
@@ -22,7 +21,6 @@ class InitialScreen extends StatelessWidget {
                     crossAxisCount: 3),
                 itemBuilder: (_, index) {
                   return TimingSqaure(
-                    prov,
                     InitialTimingModel.initialTimings[index],
                   );
                 },
@@ -52,10 +50,9 @@ class InitialScreen extends StatelessWidget {
 
 class TimingSqaure extends StatelessWidget {
   const TimingSqaure(
-    this.prov,
     this.timing,
   );
-  final ChessTimerProvider prov;
+
   final CustomTiming timing;
 
   @override
@@ -63,13 +60,14 @@ class TimingSqaure extends StatelessWidget {
     return Card(
       child: InkResponse(
         onTap: () {
-          prov.initValues(timing);
-
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) {
-                return PlayerCards(prov);
+                return ChangeNotifierProvider(
+                  create: (_) => ChessTimerProvider(),
+                  child: PlayingClock(timing),
+                );
               },
             ),
           );

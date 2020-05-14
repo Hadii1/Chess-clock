@@ -173,7 +173,7 @@ class ChessTimerProvider with ChangeNotifier {
         _acountdownTimer.cancel();
       }
 
-      atextShown = (_atemp.format());
+      atextShown = _atemp.format();
       _startTimer(2);
     } else {
       moves++;
@@ -262,7 +262,7 @@ class ChessTimerProvider with ChangeNotifier {
   }
 
   disposeTimers() {
-    print('disposing timers');
+
     if (_acountdownTimer != null) {
       _acountdownTimer.cancel();
     }

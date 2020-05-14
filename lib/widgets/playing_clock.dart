@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:liclock/models/custom_timing_podo.dart';
 import 'package:liclock/providers/chess_timer.dart';
+import 'package:provider/provider.dart';
 
-class PlayerCards extends StatefulWidget {
-  const PlayerCards(this.chessTimerProvider);
-  final chessTimerProvider;
+class PlayingClock extends StatefulWidget {
+  const PlayingClock(this._timing);
+  final CustomTiming _timing;
 
   @override
-  _PlayerCardsState createState() => _PlayerCardsState();
+  _PlayingClockState createState() => _PlayingClockState();
 }
 
-class _PlayerCardsState extends State<PlayerCards> with WidgetsBindingObserver {
+class _PlayingClockState extends State<PlayingClock>
+    with WidgetsBindingObserver {
   ChessTimerProvider prov;
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
-    prov = widget.chessTimerProvider;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      prov.initValues(widget._timing);
+    });
+
     super.initState();
   }
 
@@ -28,6 +34,7 @@ class _PlayerCardsState extends State<PlayerCards> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     print('$state');
+
     if (state == AppLifecycleState.paused) {
       prov.pause();
     }
@@ -36,6 +43,7 @@ class _PlayerCardsState extends State<PlayerCards> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    prov = Provider.of<ChessTimerProvider>(context);
     return Scaffold(
         body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -61,21 +69,22 @@ class _PlayerCardsState extends State<PlayerCards> with WidgetsBindingObserver {
                       child: Stack(
                         children: <Widget>[
                           Card(
-                              color: prov.btimeEnded
-                                  ? Colors.red
-                                  : prov.aturn
-                                      ? Colors.grey[300]
-                                      : Colors.black87,
-                              child: Center(
-                                child: Text(
-                                  prov.btextShown,
-                                  style: TextStyle(
-                                      fontSize: 60,
-                                      color: prov.aturn
-                                          ? Colors.black
-                                          : Colors.white),
-                                ),
-                              )),
+                            color: prov.btimeEnded
+                                ? Colors.red
+                                : prov.aturn
+                                    ? Colors.grey[300]
+                                    : Colors.black87,
+                            child: Center(
+                              child: Text(
+                                prov.btextShown,
+                                style: TextStyle(
+                                    fontSize: 60,
+                                    color: prov.aturn
+                                        ? Colors.black
+                                        : Colors.white),
+                              ),
+                            ),
+                          ),
                           Container(
                             alignment: Alignment.bottomLeft,
                             padding: EdgeInsets.all(12),

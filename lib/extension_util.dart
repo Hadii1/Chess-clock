@@ -13,7 +13,7 @@ String _formatMinsAndSec(int number) {
 }
 
 extension FormatTiming on int {
-  format() => _timeFormat(this);
+  String format() => _timeFormat(this);
 }
 
 String _timeFormat(int totalMillis) {
