@@ -33,8 +33,6 @@ class _PlayingClockState extends State<PlayingClock>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print('$state');
-
     if (state == AppLifecycleState.paused) {
       prov.pause();
     }
@@ -57,15 +55,15 @@ class _PlayingClockState extends State<PlayingClock>
                   quarterTurns: 2,
                   child: InkWell(
                       splashColor: prov.aturn ? Colors.black87 : Colors.orange,
-                      onTap: () => {
-                            if (!prov.btimeEnded)
-                              {
-                                if (prov.playing)
-                                  {
-                                    if (!prov.aturn) {prov.cardPressed('b')}
-                                  }
-                              }
-                          },
+                      onTap: () {
+                        if (!prov.btimeEnded) {
+                          if (prov.playing) {
+                            if (!prov.aturn) {
+                              prov.cardPressed('b');
+                            }
+                          }
+                        }
+                      },
                       child: Stack(
                         children: <Widget>[
                           Card(

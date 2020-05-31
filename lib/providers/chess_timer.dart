@@ -27,14 +27,14 @@ class ChessTimerProvider with ChangeNotifier {
         (timing.btimeHours * 3600 + timing.btimeMins * 60 + timing.btimeSec) *
             1000;
 
-    atotalMs = atimeMs;
-    btotalMs = btimeMs;
-    ainc = timing.aInc;
-    binc = timing.bInc;
-    aDelay = timing.aDelay;
-    bDelay = timing.bDelay;
-    atemp = atimeMs;
-    btemp = btimeMs;
+    _atotalMs = atimeMs;
+    _btotalMs = btimeMs;
+    _ainc = timing.aInc;
+    _binc = timing.bInc;
+    _aDelay = timing.aDelay;
+    _bDelay = timing.bDelay;
+    _atemp = atimeMs;
+    _btemp = btimeMs;
     atextShown = ('${atimeMs.format()}');
     btextShown = ('${btimeMs.format()}');
   }
@@ -44,8 +44,8 @@ class ChessTimerProvider with ChangeNotifier {
   int _atotalMs = 100;
   int _ainc = 0;
   int _binc = 0;
-  int _adelay = 0;
-  int _bdelay = 0;
+  int _aDelay = 0;
+  int _bDelay = 0;
   int _atemp = 0;
   int _btemp = 0;
   int _moves = 0;
@@ -59,33 +59,8 @@ class ChessTimerProvider with ChangeNotifier {
   String _atextShown = '';
   String _btextShown = '';
 
-  set atemp(int number) {
-    _atemp = number;
-    notifyListeners();
-  }
-
-  set btemp(int number) {
-    _btemp = number;
-    notifyListeners();
-  }
-
   set moves(int number) {
     _moves = number;
-    notifyListeners();
-  }
-
-  set aDelay(int value) {
-    _adelay = value;
-    notifyListeners();
-  }
-
-  set bDelay(int value) {
-    _bdelay = value;
-    notifyListeners();
-  }
-
-  set ainc(int value) {
-    _ainc = value;
     notifyListeners();
   }
 
@@ -94,23 +69,8 @@ class ChessTimerProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  set atotalMs(int value) {
-    _atotalMs = value;
-    notifyListeners();
-  }
-
-  set binc(int value) {
-    _binc = value;
-    notifyListeners();
-  }
-
   set atextShown(String value) {
     _atextShown = value;
-    notifyListeners();
-  }
-
-  set btotalMs(int value) {
-    _btotalMs = value;
     notifyListeners();
   }
 
@@ -134,10 +94,8 @@ class ChessTimerProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  int get atotalMs => _atotalMs;
-  int get btotalMs => _btotalMs;
-  int get aDelay => _adelay;
-  int get bDelay => _bdelay;
+  int get aDelay => _aDelay;
+  int get bDelay => _bDelay;
   String get atextShown => _atextShown;
   String get btextShown => _btextShown;
   bool get playing => _playing;
@@ -147,8 +105,6 @@ class ChessTimerProvider with ChangeNotifier {
   int get aInc => _ainc;
   int get bInc => _binc;
   int get moves => _moves;
-  int get atemp => _atemp;
-  int get btemp => _btemp;
 
   CountdownTimer _acountdownTimer;
   CountdownTimer _bcountdownTimer;
@@ -195,13 +151,17 @@ class ChessTimerProvider with ChangeNotifier {
     if (player == 1) {
       _adelayTimer = Timer(Duration(seconds: aDelay), () {
         _acountdownTimer = CountdownTimer(
-            Duration(milliseconds: atemp), Duration(milliseconds: 100));
+          Duration(milliseconds: _atemp),
+          Duration(milliseconds: 100),
+        );
         _initializeAListener();
       });
     } else {
       _bdelayTimer = Timer(Duration(seconds: bDelay), () {
         _bcountdownTimer = CountdownTimer(
-            Duration(milliseconds: btemp), Duration(milliseconds: 100));
+          Duration(milliseconds: _btemp),
+          Duration(milliseconds: 100),
+        );
         _initializeBListener();
       });
     }
@@ -222,11 +182,11 @@ class ChessTimerProvider with ChangeNotifier {
     playing = !playing;
 
     if (_firstStart) {
+      //Game just started
       _firstStart = false;
       _startTimer(1);
       return;
     } else {
-      //not first start
       if (!playing) {
         //pause game
 
@@ -234,14 +194,14 @@ class ChessTimerProvider with ChangeNotifier {
           if (_adelayTimer.isActive) {
             _adelayTimer.cancel();
           } else {
-            atemp = _acountdownTimer.remaining.inMilliseconds;
+            _atemp = _acountdownTimer.remaining.inMilliseconds;
             _acountdownTimer.cancel();
           }
         } else {
           if (_bdelayTimer.isActive) {
             _bdelayTimer.cancel();
           } else {
-            btemp = _bcountdownTimer.remaining.inMilliseconds;
+            _btemp = _bcountdownTimer.remaining.inMilliseconds;
             _bcountdownTimer.cancel();
           }
         }
@@ -250,11 +210,11 @@ class ChessTimerProvider with ChangeNotifier {
 
         if (aturn) {
           _acountdownTimer = CountdownTimer(
-              Duration(milliseconds: atemp), Duration(milliseconds: 100));
+              Duration(milliseconds: _atemp), Duration(milliseconds: 100));
           _initializeAListener();
         } else {
           _bcountdownTimer = CountdownTimer(
-              Duration(milliseconds: btemp), Duration(milliseconds: 100));
+              Duration(milliseconds: _btemp), Duration(milliseconds: 100));
           _initializeBListener();
         }
       }
@@ -262,7 +222,6 @@ class ChessTimerProvider with ChangeNotifier {
   }
 
   disposeTimers() {
-
     if (_acountdownTimer != null) {
       _acountdownTimer.cancel();
     }
@@ -287,16 +246,17 @@ class ChessTimerProvider with ChangeNotifier {
     playing = false;
     aturn = true;
     _firstStart = true;
-    atemp = atotalMs;
-    btemp = btotalMs;
-    atextShown = atotalMs.format();
-    btextShown = btotalMs.format();
+    _atemp = _atotalMs;
+    _btemp = _btotalMs;
+    atextShown = _atotalMs.format();
+    btextShown = _btotalMs.format();
   }
 
   _initializeAListener() {
     _alistener = _acountdownTimer.listen(null);
 
     _alistener.onData((duration) {
+      //Game over
       if (_acountdownTimer.remaining.inMilliseconds < 20) {
         playing = false;
         audioCache.play('meow.mp3', mode: PlayerMode.LOW_LATENCY);
@@ -313,6 +273,7 @@ class ChessTimerProvider with ChangeNotifier {
     _blistener = _bcountdownTimer.listen(null);
 
     _blistener.onData((duration) {
+      //Game over
       if (_bcountdownTimer.remaining.inMilliseconds < 20) {
         playing = false;
         audioCache.play('meow.mp3', mode: PlayerMode.LOW_LATENCY);
