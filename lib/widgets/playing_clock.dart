@@ -13,7 +13,7 @@ class PlayingClock extends StatefulWidget {
 
 class _PlayingClockState extends State<PlayingClock>
     with WidgetsBindingObserver {
-  ChessTimerProvider prov;
+  TimerLogicProvider prov;
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -41,7 +41,7 @@ class _PlayingClockState extends State<PlayingClock>
 
   @override
   Widget build(BuildContext context) {
-    prov = Provider.of<ChessTimerProvider>(context);
+    prov = Provider.of<TimerLogicProvider>(context);
     return Scaffold(
         body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -6,15 +6,15 @@ import 'package:quiver/async.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:liclock/extension_util.dart';
 
-class ChessTimerProvider with ChangeNotifier {
+class TimerLogicProvider with ChangeNotifier {
   //100 and 0 means nothing, just to avoid null
-  AudioCache audioCache;
+  AudioCache _audioCache;
 
-  ChessTimerProvider() {
-    audioCache = AudioCache();
+  TimerLogicProvider() {
+    _audioCache = AudioCache();
 
-    audioCache.load('tick.mp3');
-    audioCache.load('meow.mp3');
+    _audioCache.load('tick.mp3');
+    _audioCache.load('meow.mp3');
   }
 
   void initValues(CustomTiming timing) {
@@ -116,7 +116,7 @@ class ChessTimerProvider with ChangeNotifier {
   StreamSubscription<CountdownTimer> _blistener;
 
   cardPressed(String player) {
-    audioCache.play('tick.mp3', mode: PlayerMode.LOW_LATENCY);
+    _audioCache.play('tick.mp3', mode: PlayerMode.LOW_LATENCY);
 
     _disableSecondPlayer(player);
 
@@ -236,6 +236,7 @@ class ChessTimerProvider with ChangeNotifier {
     if (_bdelayTimer != null) {
       _bdelayTimer.cancel();
     }
+
   }
 
   reset() {
@@ -259,7 +260,7 @@ class ChessTimerProvider with ChangeNotifier {
       //Game over
       if (_acountdownTimer.remaining.inMilliseconds < 20) {
         playing = false;
-        audioCache.play('meow.mp3', mode: PlayerMode.LOW_LATENCY);
+        _audioCache.play('meow.mp3', mode: PlayerMode.LOW_LATENCY);
         atimeEnded = true;
         atextShown = ('00:00');
         disposeTimers();
@@ -276,7 +277,7 @@ class ChessTimerProvider with ChangeNotifier {
       //Game over
       if (_bcountdownTimer.remaining.inMilliseconds < 20) {
         playing = false;
-        audioCache.play('meow.mp3', mode: PlayerMode.LOW_LATENCY);
+        _audioCache.play('meow.mp3', mode: PlayerMode.LOW_LATENCY);
         btimeEnded = true;
         btextShown = ('00:00');
         disposeTimers();

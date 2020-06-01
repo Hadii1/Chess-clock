@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:liclock/models/custom_timing_podo.dart';
 import 'package:hive/hive.dart';
 import 'package:liclock/providers/chess_timer.dart';
+import 'package:liclock/providers/custom_timing_provider.dart';
 import 'package:liclock/widgets/playing_clock.dart';
 import 'package:provider/provider.dart';
 import 'custom_timing_screen.dart';
@@ -48,7 +49,10 @@ class _CustomScreenState extends State<CustomScreen> {
                           context: context,
                           barrierDismissible: false,
                           builder: (_) {
-                            return CustomTimingScreen();
+                            return ChangeNotifierProvider(
+                              create: (context) => CustomTimingProvider(),
+                              child: CustomTimingScreen(),
+                            );
                           },
                         );
                         if (mounted) {
@@ -99,7 +103,7 @@ class _CustomTimingSqaureState extends State<CustomTimingSqaure> {
               MaterialPageRoute(
                 builder: (_) {
                   return ChangeNotifierProvider(
-                    create: (_) => ChessTimerProvider(),
+                    create: (_) => TimerLogicProvider(),
                     child: PlayingClock(widget.timing),
                   );
                 },

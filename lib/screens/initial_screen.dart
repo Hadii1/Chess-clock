@@ -65,7 +65,7 @@ class TimingSqaure extends StatelessWidget {
             MaterialPageRoute(
               builder: (_) {
                 return ChangeNotifierProvider(
-                  create: (_) => ChessTimerProvider(),
+                  create: (_) => TimerLogicProvider(),
                   child: PlayingClock(timing),
                 );
               },
