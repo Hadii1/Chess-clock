@@ -6,7 +6,7 @@ class InitialTimingModel {
   final String title;
 
   InitialTimingModel(this.timing, this.increment, this.title);
-  
+
   static List<CustomTiming> initialTimings = [
     CustomTiming(
         atimeHours: 0,
@@ -96,11 +96,11 @@ class InitialTimingModel {
         atimeHours: 0,
         atimeMins: 5,
         atimeSec: 0,
-        aInc: 5,
+        aInc: 3,
         btimeHours: 0,
         btimeMins: 5,
         btimeSec: 0,
-        bInc: 5,
+        bInc: 3,
         aDelay: 0,
         bDelay: 0,
         clockName: 'Blitz'),
@@ -108,7 +108,7 @@ class InitialTimingModel {
         atimeHours: 0,
         atimeMins: 5,
         atimeSec: 0,
-        aInc: 0,
+        aInc: 5,
         btimeHours: 0,
         btimeMins: 5,
         btimeSec: 0,
