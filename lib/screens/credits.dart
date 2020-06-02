@@ -21,7 +21,7 @@ class CreditScreen extends StatelessWidget {
               text: TextSpan(
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 19,
+                  fontSize: 17,
                   fontWeight: FontWeight.w300,
                 ),
                 children: [
@@ -47,12 +47,12 @@ class CreditScreen extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(8, 36, 0, 48),
+            padding: EdgeInsets.fromLTRB(8, 36, 0, 0),
             child: RichText(
               text: TextSpan(
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 19,
+                  fontSize: 17,
                   fontWeight: FontWeight.w300,
                 ),
                 children: [
@@ -72,6 +72,37 @@ class CreditScreen extends StatelessWidget {
                         ..onTap = () {
                           launch('https://www.flaticon.com/authors/freepik');
                         })
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(8, 36, 0, 48),
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w300,
+                ),
+                children: [
+                  TextSpan(
+                    text: '• Developer contact:\n',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '  vkras4858@gmail.com',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: Colors.blue,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launch('mailto:vkras4858@gmail.com');
+                      },
+                  )
                 ],
               ),
             ),

@@ -21,11 +21,11 @@ class CustomTimingScreen extends StatelessWidget {
             children: <Widget>[
               TimeCard(),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(vertical: 16),
                 child: IncCard(),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.only(bottom: 16),
                 child: DelayCard(),
               ),
               Container(
@@ -33,49 +33,69 @@ class CustomTimingScreen extends StatelessWidget {
                 child: TextField(
                   maxLength: 12,
                   decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Colors.black87),
+                    labelStyle: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w200,
+                    ),
+                    counter: SizedBox.shrink(),
                     labelText: 'Clock Name',
+                    filled: true,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 0.5),
+                      borderSide: BorderSide(
+                        width: 0.3,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        width: 0.5,
+                        width: 0.3,
                         color: Theme.of(context).accentColor,
                       ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   onChanged: (String value) => prov.clockName = value,
                 ),
               ),
-              SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                  child: RaisedButton(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
-                    color: Colors.black87,
-                    child: Text(
-                      'Save',
-                      style: TextStyle(color: Colors.white),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                child: AnimatedCrossFade(
+                  crossFadeState: prov.isRightFormat()
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  duration: Duration(milliseconds: 300),
+                  firstChild: Container(
+                    width: double.maxFinite,
+                    child: RaisedButton(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      color: Colors.black87,
+                      child: Text(
+                        'Save',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        prov.saveData();
+                        Navigator.pop(context);
+                      },
                     ),
-                    onPressed: () {
-                      if (!prov.isRightFormat()) {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Enter a valid Time',
-                            ),
-                          ),
-                        );
-                        return;
-                      }
-
-                      prov.saveData();
-                      Navigator.pop(context);
-                    },
+                  ),
+                  secondChild: Container(
+                    width: double.maxFinite,
+                    child: RaisedButton(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      disabledColor: Colors.grey,
+                      child: Text(
+                        'Save',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: null,
+                    ),
                   ),
                 ),
               ),
@@ -94,22 +114,20 @@ class TimeCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.fromLTRB(4, 4, 0, 10),
+          padding: EdgeInsets.fromLTRB(6, 6, 0, 12),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Icon(Icons.arrow_right),
-              Padding(
-                padding: EdgeInsets.all(4),
-                child: Text('Equal Timings:'),
+              Text(
+                'Equal Timings:',
+                style: TextStyle(fontSize: 16),
               ),
-              Checkbox(
-                value: prov.equalTiming,
-                checkColor: Colors.white,
-                activeColor: Colors.black87,
-                onChanged: (bool value) {
+              RoundedCheckBox(
+                onChanged: (value) {
                   prov.equalTiming = value;
                 },
+                value: prov.equalTiming,
               ),
             ],
           ),
@@ -125,42 +143,40 @@ class TimeCard extends StatelessWidget {
           ),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Card(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: FlatButton(
-                  child: Text(
-                    '${prov.convertToTextFormat(prov.atimeHours)}:${prov.convertToTextFormat(prov.atimeMins)}:${prov.convertToTextFormat(prov.atimeSec)}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) =>
-                          TimeDialog(player: 1, provider: prov),
-                    );
-                  },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: FlatButton(
+                child: Text(
+                  '${prov.convertToTextFormat(prov.atimeHours)}:${prov.convertToTextFormat(prov.atimeMins)}:${prov.convertToTextFormat(prov.atimeSec)}',
+                  style: TextStyle(fontSize: 18),
                 ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => TimeDialog(player: 1, provider: prov),
+                  );
+                },
               ),
             ),
             Card(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: FlatButton(
-                  child: Text(
-                    '${prov.convertToTextFormat(prov.btimeHours)}:${prov.convertToTextFormat(prov.btimeMins)}:${prov.convertToTextFormat(prov.btimeSec)}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) =>
-                          TimeDialog(player: 2, provider: prov),
-                    );
-                  },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: FlatButton(
+                child: Text(
+                  '${prov.convertToTextFormat(prov.btimeHours)}:${prov.convertToTextFormat(prov.btimeMins)}:${prov.convertToTextFormat(prov.btimeSec)}',
+                  style: TextStyle(fontSize: 18),
                 ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => TimeDialog(player: 2, provider: prov),
+                  );
+                },
               ),
             ),
           ],
@@ -346,50 +362,48 @@ class IncCard extends StatelessWidget {
             style: TextStyle(fontSize: 21, fontWeight: FontWeight.w300),
           )),
         ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              SizedBox(
-                width: 80,
-                child: Card(
-                  child: Center(
-                    child: FlatButton(
-                      child: Text(
-                        '${prov.aincSec}',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                              IncrementDialog(player: 1, provider: prov),
-                        );
-                      },
-                    ),
-                  ),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: FlatButton(
+                child: Text(
+                  '${prov.aincSec}',
+                  style: TextStyle(fontSize: 18),
                 ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        IncrementDialog(player: 1, provider: prov),
+                  );
+                },
               ),
-              SizedBox(
-                width: 80,
-                child: Card(
-                  child: Center(
-                    child: FlatButton(
-                      child: Text(
-                        '${prov.bincSec}',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                              IncrementDialog(player: 2, provider: prov),
-                        );
-                      },
-                    ),
-                  ),
+            ),
+          ),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: FlatButton(
+                child: Text(
+                  '${prov.bincSec}',
+                  style: TextStyle(fontSize: 18),
                 ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        IncrementDialog(player: 2, provider: prov),
+                  );
+                },
               ),
-            ]),
+            ),
+          ),
+        ]),
       ],
     );
   }
@@ -492,45 +506,45 @@ class DelayCard extends StatelessWidget {
           ),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
-              width: 80,
-              child: Card(
-                child: Center(
-                  child: FlatButton(
-                    child: Text(
-                      '${prov.adelaySec}',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) =>
-                            DelayDialog(player: 1, provider: prov),
-                      );
-                    },
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: FlatButton(
+                  child: Text(
+                    '${prov.adelaySec}',
+                    style: TextStyle(fontSize: 18),
                   ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          DelayDialog(player: 1, provider: prov),
+                    );
+                  },
                 ),
               ),
             ),
-            SizedBox(
-              width: 80,
-              child: Card(
-                child: Center(
-                  child: FlatButton(
-                    child: Text(
-                      '${prov.bdelaySec}',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) =>
-                            DelayDialog(player: 2, provider: prov),
-                      );
-                    },
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: FlatButton(
+                  child: Text(
+                    '${prov.bdelaySec}',
+                    style: TextStyle(fontSize: 18),
                   ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          DelayDialog(player: 2, provider: prov),
+                    );
+                  },
                 ),
               ),
             ),
@@ -614,6 +628,50 @@ class _DelayDialogState extends State<DelayDialog> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedCheckBox extends StatelessWidget {
+  const RoundedCheckBox({@required this.onChanged, @required this.value});
+  final Function(bool) onChanged;
+  final bool value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: InkWell(
+        splashColor: Colors.transparent,
+        onTap: () {
+          onChanged(!value);
+        },
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 250),
+          width: 20,
+          height: 20,
+          decoration: BoxDecoration(
+            color: value ? Colors.black : Colors.transparent,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              width: value ? 0 : 1,
+              color: Colors.grey,
+            ),
+          ),
+          child: Center(
+            child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              child: value
+                  ? Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 16,
+                    )
+                  : SizedBox.shrink(),
+            ),
+          ),
         ),
       ),
     );

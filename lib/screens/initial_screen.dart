@@ -86,11 +86,20 @@ class TimingSqaure extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  '${timing.atimeMins} + ${timing.aInc}',
-                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.w300),
+                  '${timing.clockName}',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black87,
+                  ),
                 ),
                 Text(
-                  '${timing.clockName}',
+                  '${timing.atimeMins} + ${timing.aInc}',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black87,
+                  ),
                 ),
               ],
             ),

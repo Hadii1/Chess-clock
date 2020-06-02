@@ -23,27 +23,30 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       theme: ThemeData(
         accentColor: Colors.orange,
-        splashColor: Colors.orange.withOpacity(0.2),
+        splashColor: Colors.orange,
       ),
-      title: 'Hadi Chess Clock',
-      home: DbInitialization(),
+      title: 'Cheska',
+      home: InitScreen(),
     );
   }
 }
 
-class DbInitialization extends StatefulWidget {
-  DbInitialization({Key key}) : super(key: key);
+//Init the local storage
+class InitScreen extends StatefulWidget {
+  InitScreen({Key key}) : super(key: key);
 
   @override
-  _DbInitializationState createState() => _DbInitializationState();
+  _InitScreenState createState() => _InitScreenState();
 }
 
-class _DbInitializationState extends State<DbInitialization> {
+class _InitScreenState extends State<InitScreen> {
   @override
   void initState() {
     _initHive();

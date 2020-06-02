@@ -154,25 +154,30 @@ class _CustomTimingSqaureState extends State<CustomTimingSqaure> {
             });
           },
           child: AnimatedContainer(
-              duration: Duration(milliseconds: 250),
+              duration: Duration(milliseconds: 200),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: _isDialogShown
-                      ? Theme.of(context).accentColor
-                      : Colors.white,
-                  shape: BoxShape.rectangle,
-                  border: Border.all(width: 0.5, color: Colors.black87),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.white,
-                      spreadRadius: 5,
-                      blurRadius: 20,
-                    )
-                  ]),
+                borderRadius: BorderRadius.circular(8),
+                color: _isDialogShown
+                    ? Theme.of(context).accentColor
+                    : Colors.white,
+                shape: BoxShape.rectangle,
+                border: Border.all(width: 0.5, color: Colors.black87),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white,
+                    spreadRadius: 5,
+                    blurRadius: 20,
+                  )
+                ],
+              ),
               child: Center(
                 child: Text(
                   '${widget.timing.clockName}',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black87,
+                  ),
                 ),
               )),
         ),

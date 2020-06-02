@@ -12,8 +12,12 @@ class LandingScreen extends StatelessWidget {
           backgroundColor: Colors.black87,
           centerTitle: true,
           title: Text(
-            'Hadi Chess Clock',
-            style: TextStyle(color: Colors.white),
+            'Cheska',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+              letterSpacing: 1,
+            ),
           ),
           bottom: TabBar(
             tabs: <Widget>[

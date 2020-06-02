@@ -67,19 +67,22 @@ class _PlayingClockState extends State<PlayingClock>
                       child: Stack(
                         children: <Widget>[
                           Card(
-                            color: prov.btimeEnded
-                                ? Colors.red
-                                : prov.aturn
-                                    ? Colors.grey[300]
-                                    : Colors.black87,
-                            child: Center(
-                              child: Text(
-                                prov.btextShown,
-                                style: TextStyle(
-                                    fontSize: 60,
-                                    color: prov.aturn
-                                        ? Colors.black
-                                        : Colors.white),
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              color: prov.btimeEnded
+                                  ? Colors.red
+                                  : prov.aturn
+                                      ? Colors.grey[300]
+                                      : Colors.black87,
+                              child: Center(
+                                child: Text(
+                                  prov.btextShown,
+                                  style: TextStyle(
+                                      fontSize: 60,
+                                      color: prov.aturn
+                                          ? Colors.black
+                                          : Colors.white),
+                                ),
                               ),
                             ),
                           ),
@@ -158,8 +161,10 @@ class _PlayingClockState extends State<PlayingClock>
                     quarterTurns: 1,
                     child: Text(
                       'Moves: ${prov.moves}',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w300, fontSize: 14),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ),
@@ -183,18 +188,21 @@ class _PlayingClockState extends State<PlayingClock>
                   child: Stack(
                     children: <Widget>[
                       Card(
-                          color: prov.atimeEnded
-                              ? Colors.red
-                              : prov.aturn ? Colors.black87 : Colors.grey[300],
-                          child: Center(
-                            child: Text(
-                              prov.atextShown,
-                              style: TextStyle(
-                                  fontSize: 60,
-                                  color:
-                                      prov.aturn ? Colors.white : Colors.black),
-                            ),
-                          )),
+                          child: AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        color: prov.atimeEnded
+                            ? Colors.red
+                            : prov.aturn ? Colors.black87 : Colors.grey[300],
+                        child: Center(
+                          child: Text(
+                            prov.atextShown,
+                            style: TextStyle(
+                                fontSize: 60,
+                                color:
+                                    prov.aturn ? Colors.white : Colors.black),
+                          ),
+                        ),
+                      )),
                       Container(
                           padding: EdgeInsets.all(12),
                           alignment: Alignment.bottomLeft,
