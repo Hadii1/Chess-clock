@@ -152,7 +152,7 @@ class TimeCard extends StatelessWidget {
               child: FlatButton(
                 child: Text(
                   '${prov.convertToTextFormat(prov.atimeHours)}:${prov.convertToTextFormat(prov.atimeMins)}:${prov.convertToTextFormat(prov.atimeSec)}',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onPressed: () {
                   showDialog(
@@ -169,7 +169,7 @@ class TimeCard extends StatelessWidget {
               child: FlatButton(
                 child: Text(
                   '${prov.convertToTextFormat(prov.btimeHours)}:${prov.convertToTextFormat(prov.btimeMins)}:${prov.convertToTextFormat(prov.btimeSec)}',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onPressed: () {
                   showDialog(
@@ -205,139 +205,152 @@ class _TimeDialogState extends State<TimeDialog> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Container(
+        padding: EdgeInsets.only(top: 24),
         height: 250,
-        width: 350,
-        padding: EdgeInsets.only(top: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
           children: <Widget>[
-            Column(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  'Hours',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 1),
-                  child: Text(
-                    '_____',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey),
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Hours',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 1),
+                        child: Text(
+                          '_____',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.grey),
+                        ),
+                      ),
+                      NumberPicker.integer(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(2),
+                          color: Colors.grey.withOpacity(0.2),
+                        ),
+                        highlightSelectedValue: true,
+                        itemExtent: 40,
+                        step: 1,
+                        initialValue: widget.player == 1
+                            ? widget.provider.atimeHours
+                            : widget.provider.btimeHours,
+                        minValue: 0,
+                        maxValue: 10,
+                        onChanged: (num a) {
+                          widget.player == 1
+                              ? widget.provider.atimeHours = a
+                              : widget.provider.btimeHours = a;
+                          setState(
+                              () {}); //to highlight selected values in the dialog
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                NumberPicker.integer(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(2),
-                    color: Colors.grey.withOpacity(0.2),
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Minutes',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 1),
+                        child: Text(
+                          '_____',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.grey),
+                        ),
+                      ),
+                      NumberPicker.integer(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(2),
+                            color: Colors.grey.withOpacity(0.2)),
+                        itemExtent: 40,
+                        highlightSelectedValue: true,
+                        initialValue: widget.player == 1
+                            ? widget.provider.atimeMins
+                            : widget.provider.btimeMins,
+                        minValue: 0,
+                        maxValue: 60,
+                        onChanged: (num a) {
+                          widget.player == 1
+                              ? widget.provider.atimeMins = a
+                              : widget.provider.btimeMins = a;
+                          setState(
+                              () {}); //to highlight selected values in the dialog
+                        },
+                      )
+                    ],
                   ),
-                  highlightSelectedValue: true,
-                  itemExtent: 40,
-                  step: 1,
-                  initialValue: widget.player == 1
-                      ? widget.provider.atimeHours
-                      : widget.provider.btimeHours,
-                  minValue: 0,
-                  maxValue: 10,
-                  onChanged: (num a) {
-                    widget.player == 1
-                        ? widget.provider.atimeHours = a
-                        : widget.provider.btimeHours = a;
-                    setState(
-                        () {}); //to highlight selected values in the dialog
-                  },
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Seconds',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 1),
+                        child: Text(
+                          '_____',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.grey),
+                        ),
+                      ),
+                      NumberPicker.integer(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(2),
+                            color: Colors.grey.withOpacity(0.2)),
+                        highlightSelectedValue: true,
+                        itemExtent: 40,
+                        initialValue: widget.player == 1
+                            ? widget.provider.atimeSec
+                            : widget.provider.btimeSec,
+                        minValue: 0,
+                        maxValue: 60,
+                        onChanged: (num a) {
+                          widget.player == 1
+                              ? widget.provider.atimeSec = a
+                              : widget.provider.btimeSec = a;
+                          setState(
+                              () {}); //to highlight selected values in the dialog
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Minutes',
-                  style: TextStyle(fontSize: 18),
+            FlatButton(
+              splashColor: Colors.orange,
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(top: 6),
+                child: Text(
+                  'Confirm',
+                  style: TextStyle(color: Colors.orange),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 1),
-                  child: Text(
-                    '_____',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey),
-                  ),
-                ),
-                NumberPicker.integer(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(2),
-                      color: Colors.grey.withOpacity(0.2)),
-                  itemExtent: 40,
-                  highlightSelectedValue: true,
-                  initialValue: widget.player == 1
-                      ? widget.provider.atimeMins
-                      : widget.provider.btimeMins,
-                  minValue: 0,
-                  maxValue: 60,
-                  onChanged: (num a) {
-                    widget.player == 1
-                        ? widget.provider.atimeMins = a
-                        : widget.provider.btimeMins = a;
-                    setState(
-                        () {}); //to highlight selected values in the dialog
-                  },
-                )
-              ],
-            ),
-            Column(
-              children: <Widget>[
-                Text(
-                  'Seconds',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 1),
-                  child: Text(
-                    '_____',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey),
-                  ),
-                ),
-                NumberPicker.integer(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(2),
-                      color: Colors.grey.withOpacity(0.2)),
-                  highlightSelectedValue: true,
-                  itemExtent: 40,
-                  initialValue: widget.player == 1
-                      ? widget.provider.atimeSec
-                      : widget.provider.btimeSec,
-                  minValue: 0,
-                  maxValue: 60,
-                  onChanged: (num a) {
-                    widget.player == 1
-                        ? widget.provider.atimeSec = a
-                        : widget.provider.btimeSec = a;
-                    setState(
-                        () {}); //to highlight selected values in the dialog
-                  },
-                ),
-                FlatButton(
-                  splashColor: Colors.orange,
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.only(top: 6),
-                    child: Text(
-                      'Confirm',
-                      style: TextStyle(color: Colors.orange),
-                    ),
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
+              ),
+              onPressed: () => Navigator.pop(context),
             ),
           ],
         ),
@@ -371,7 +384,7 @@ class IncCard extends StatelessWidget {
               child: FlatButton(
                 child: Text(
                   '${prov.aincSec}',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onPressed: () {
                   showDialog(
@@ -391,7 +404,7 @@ class IncCard extends StatelessWidget {
               child: FlatButton(
                 child: Text(
                   '${prov.bincSec}',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onPressed: () {
                   showDialog(
@@ -437,7 +450,7 @@ class _IncrementDialogState extends State<IncrementDialog> {
             Center(
               child: Text(
                 'Seconds',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 16),
               ),
             ),
             Container(
@@ -446,9 +459,10 @@ class _IncrementDialogState extends State<IncrementDialog> {
               child: Text(
                 '_____',
                 style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.grey,
+                ),
               ),
             ),
             NumberPicker.integer(
@@ -471,12 +485,12 @@ class _IncrementDialogState extends State<IncrementDialog> {
               },
             ),
             Container(
-              alignment: Alignment.bottomRight,
+              alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: FlatButton(
                 child: Text(
                   'Confirm',
-                  style: TextStyle(color: Colors.black87),
+                  style: TextStyle(color: Theme.of(context).accentColor),
                 ),
                 onPressed: () => Navigator.pop(context),
               ),
@@ -516,7 +530,7 @@ class DelayCard extends StatelessWidget {
                 child: FlatButton(
                   child: Text(
                     '${prov.adelaySec}',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 16),
                   ),
                   onPressed: () {
                     showDialog(
@@ -536,7 +550,7 @@ class DelayCard extends StatelessWidget {
                 child: FlatButton(
                   child: Text(
                     '${prov.bdelaySec}',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 16),
                   ),
                   onPressed: () {
                     showDialog(
@@ -582,7 +596,7 @@ class _DelayDialogState extends State<DelayDialog> {
             Center(
               child: Text(
                 'Seconds',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 16),
               ),
             ),
             Container(
@@ -592,7 +606,7 @@ class _DelayDialogState extends State<DelayDialog> {
                 '_____',
                 style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w300,
                     color: Colors.grey),
               ),
             ),
@@ -618,11 +632,11 @@ class _DelayDialogState extends State<DelayDialog> {
             ),
             Container(
               padding: EdgeInsets.all(6),
-              alignment: Alignment.bottomRight,
+              alignment: Alignment.center,
               child: FlatButton(
                 child: Text(
                   'Confirm',
-                  style: TextStyle(color: Colors.black87),
+                  style: TextStyle(color: Theme.of(context).accentColor),
                 ),
                 onPressed: () => Navigator.pop(context),
               ),

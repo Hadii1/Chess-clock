@@ -3,7 +3,7 @@ import 'package:liclock/models/custom_timing_podo.dart';
 import 'package:hive/hive.dart';
 import 'package:liclock/providers/chess_timer.dart';
 import 'package:liclock/providers/custom_timing_provider.dart';
-import 'package:liclock/widgets/playing_clock.dart';
+import 'package:liclock/screens/playing_clock.dart';
 import 'package:provider/provider.dart';
 import 'custom_timing_screen.dart';
 
@@ -175,7 +175,7 @@ class _CustomTimingSqaureState extends State<CustomTimingSqaure> {
                   '${widget.timing.clockName}',
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w400,
                     color: Colors.black87,
                   ),
                 ),

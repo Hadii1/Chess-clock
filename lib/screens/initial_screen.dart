@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:liclock/models/custom_timing_podo.dart';
 import 'package:liclock/models/initial_timings_model.dart';
 import 'package:liclock/providers/chess_timer.dart';
-import 'package:liclock/widgets/playing_clock.dart';
+import 'package:liclock/screens/playing_clock.dart';
 import 'package:provider/provider.dart';
 import 'credits.dart';
 
@@ -97,7 +97,7 @@ class TimingSqaure extends StatelessWidget {
                   '${timing.atimeMins} + ${timing.aInc}',
                   style: TextStyle(
                     fontSize: 17,
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w400,
                     color: Colors.black87,
                   ),
                 ),

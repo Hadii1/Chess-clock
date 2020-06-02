@@ -68,7 +68,7 @@ class _PlayingClockState extends State<PlayingClock>
                         children: <Widget>[
                           Card(
                             child: AnimatedContainer(
-                              duration: Duration(milliseconds: 300),
+                              duration: Duration(milliseconds: 200),
                               color: prov.btimeEnded
                                   ? Colors.red
                                   : prov.aturn
@@ -189,7 +189,7 @@ class _PlayingClockState extends State<PlayingClock>
                     children: <Widget>[
                       Card(
                           child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
+                        duration: Duration(milliseconds: 200),
                         color: prov.atimeEnded
                             ? Colors.red
                             : prov.aturn ? Colors.black87 : Colors.grey[300],
