@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:liclock/models/custom_timing_podo.dart';
-import 'package:liclock/providers/chess_timer.dart';
+import 'package:Cheska/models/custom_timing_podo.dart';
+import 'package:Cheska/providers/chess_timer.dart';
 import 'package:provider/provider.dart';
 
 class PlayingClock extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:liclock/models/custom_timing_podo.dart';
+import 'package:Cheska/models/custom_timing_podo.dart';
 
 class InitialTimingModel {
   final String timing;

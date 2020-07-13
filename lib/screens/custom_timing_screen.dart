@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liclock/providers/custom_timing_provider.dart';
+import 'package:Cheska/providers/custom_timing_provider.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:liclock/models/custom_timing_podo.dart';
+import 'package:Cheska/models/custom_timing_podo.dart';
 import 'dart:math';
 
 class CustomTimingProvider with ChangeNotifier {

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:liclock/models/custom_timing_podo.dart';
+import 'package:Cheska/models/custom_timing_podo.dart';
 import 'package:hive/hive.dart';
-import 'package:liclock/providers/chess_timer.dart';
-import 'package:liclock/providers/custom_timing_provider.dart';
-import 'package:liclock/screens/playing_clock.dart';
+import 'package:Cheska/providers/chess_timer.dart';
+import 'package:Cheska/providers/custom_timing_provider.dart';
+import 'package:Cheska/screens/playing_clock.dart';
 import 'package:provider/provider.dart';
 import 'custom_timing_screen.dart';
 

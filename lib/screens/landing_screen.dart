@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:liclock/screens/credits.dart';
-import 'package:liclock/screens/custom_screen.dart';
-import 'package:liclock/screens/initial_screen.dart';
+import 'package:Cheska/screens/credits.dart';
+import 'package:Cheska/screens/custom_screen.dart';
+import 'package:Cheska/screens/initial_screen.dart';
 
 class LandingScreen extends StatelessWidget {
   @override

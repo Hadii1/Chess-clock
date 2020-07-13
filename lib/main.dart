@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart' as path_prov;
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
-import 'package:liclock/models/custom_timing_podo.dart';
+import 'package:Cheska/models/custom_timing_podo.dart';
 import 'screens/landing_screen.dart';
 
 void main() async {

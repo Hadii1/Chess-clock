@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:liclock/models/custom_timing_podo.dart';
-import 'package:liclock/models/initial_timings_model.dart';
-import 'package:liclock/providers/chess_timer.dart';
-import 'package:liclock/screens/playing_clock.dart';
+import 'package:Cheska/models/custom_timing_podo.dart';
+import 'package:Cheska/models/initial_timings_model.dart';
+import 'package:Cheska/providers/chess_timer.dart';
+import 'package:Cheska/screens/playing_clock.dart';
 import 'package:provider/provider.dart';
 
 class InitialScreen extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:liclock/models/custom_timing_podo.dart';
+import 'package:Cheska/models/custom_timing_podo.dart';
 import 'package:quiver/async.dart';
 import 'package:audioplayers/audio_cache.dart';
-import 'package:liclock/extension_util.dart';
+import 'package:Cheska/extension_util.dart';
 
 class TimerLogicProvider with ChangeNotifier {
   //100 and 0 means nothing, just to avoid null
