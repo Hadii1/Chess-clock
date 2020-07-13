@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liclock/screens/credits.dart';
 import 'package:liclock/screens/custom_screen.dart';
 import 'package:liclock/screens/initial_screen.dart';
 
@@ -19,6 +20,24 @@ class LandingScreen extends StatelessWidget {
               letterSpacing: 1,
             ),
           ),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.launch),
+                iconSize: 20,
+                color: Colors.white,
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (_) {
+                      return CreditScreen();
+                    },
+                  ),
+                ),
+              ),
+            )
+          ],
           bottom: TabBar(
             tabs: <Widget>[
               Tab(

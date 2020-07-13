@@ -236,7 +236,6 @@ class TimerLogicProvider with ChangeNotifier {
     if (_bdelayTimer != null) {
       _bdelayTimer.cancel();
     }
-
   }
 
   reset() {
@@ -264,9 +263,9 @@ class TimerLogicProvider with ChangeNotifier {
         atimeEnded = true;
         atextShown = ('00:00');
         disposeTimers();
-        return;
+      } else {
+        atextShown = _acountdownTimer.remaining.inMilliseconds.format();
       }
-      atextShown = _acountdownTimer.remaining.inMilliseconds.format();
     });
   }
 
@@ -281,9 +280,9 @@ class TimerLogicProvider with ChangeNotifier {
         btimeEnded = true;
         btextShown = ('00:00');
         disposeTimers();
-        return;
+      } else {
+        btextShown = _bcountdownTimer.remaining.inMilliseconds.format();
       }
-      btextShown = _bcountdownTimer.remaining.inMilliseconds.format();
     });
   }
 

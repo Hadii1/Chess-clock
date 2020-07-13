@@ -28,12 +28,15 @@ class CreditScreen extends StatelessWidget {
                   TextSpan(
                     text: '• Rate Us',
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Theme.of(context).accentColor,
                       fontWeight: FontWeight.w300,
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        LaunchReview.launch();
+                        LaunchReview.launch(
+                          iOSAppId: '1523219613',
+                          androidAppId: 'devs.hadi_chess_clock',
+                        );
                       },
                   ),
                   TextSpan(
@@ -66,7 +69,7 @@ class CreditScreen extends StatelessWidget {
                       text: '  https://www.flaticon.com/authors/freepik',
                       style: TextStyle(
                         fontWeight: FontWeight.w300,
-                        color: Colors.blue,
+                        color: Theme.of(context).accentColor,
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
@@ -93,14 +96,14 @@ class CreditScreen extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: '  vkras4858@gmail.com',
+                    text: '  Hadi.Hammoud@live.com',
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
-                      color: Colors.blue,
+                      color: Theme.of(context).accentColor,
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launch('mailto:vkras4858@gmail.com');
+                        launch('mailto:hadi.hammoud@live.com');
                       },
                   )
                 ],

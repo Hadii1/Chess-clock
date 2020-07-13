@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:liclock/models/custom_timing_podo.dart';
 import 'package:liclock/providers/chess_timer.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,8 @@ class _PlayingClockState extends State<PlayingClock>
   TimerLogicProvider prov;
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
+    SystemChrome.setEnabledSystemUIOverlays([]); // set full screen
+    WidgetsBinding.instance.addObserver(this); //to observe lifecycle events
     WidgetsBinding.instance.addPostFrameCallback((_) {
       prov.initValues(widget._timing);
     });
@@ -26,6 +28,8 @@ class _PlayingClockState extends State<PlayingClock>
 
   @override
   void dispose() {
+    SystemChrome.setEnabledSystemUIOverlays(
+        SystemUiOverlay.values); //exit fullscreen
     prov.disposeTimers();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
@@ -43,89 +47,87 @@ class _PlayingClockState extends State<PlayingClock>
   Widget build(BuildContext context) {
     prov = Provider.of<TimerLogicProvider>(context);
     return Scaffold(
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-          Expanded(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
               //B CARD:
               flex: 4,
               child: RotatedBox(
-                  quarterTurns: 2,
-                  child: InkWell(
-                      splashColor: prov.aturn ? Colors.black87 : Colors.orange,
-                      onTap: () {
-                        if (!prov.btimeEnded) {
-                          if (prov.playing) {
-                            if (!prov.aturn) {
-                              prov.cardPressed('b');
-                            }
-                          }
+                quarterTurns: 2,
+                child: InkWell(
+                  splashColor: prov.aturn ? Colors.black87 : Colors.orange,
+                  onTap: () {
+                    if (!prov.btimeEnded) {
+                      if (prov.playing) {
+                        if (!prov.aturn) {
+                          prov.cardPressed('b');
                         }
-                      },
-                      child: Stack(
-                        children: <Widget>[
-                          Card(
-                            child: AnimatedContainer(
-                              duration: Duration(milliseconds: 200),
-                              color: prov.btimeEnded
-                                  ? Colors.red
-                                  : prov.aturn
-                                      ? Colors.grey[300]
-                                      : Colors.black87,
-                              child: Center(
-                                child: Text(
-                                  prov.btextShown,
-                                  style: TextStyle(
-                                      fontSize: 60,
-                                      color: prov.aturn
-                                          ? Colors.black
-                                          : Colors.white),
-                                ),
-                              ),
+                      }
+                    }
+                  },
+                  child: Stack(
+                    children: <Widget>[
+                      Card(
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          color: prov.btimeEnded
+                              ? Colors.red
+                              : prov.aturn ? Colors.grey[300] : Colors.black87,
+                          child: Center(
+                            child: Text(
+                              prov.btextShown,
+                              style: TextStyle(
+                                  fontSize: 60,
+                                  color:
+                                      prov.aturn ? Colors.black : Colors.white),
                             ),
                           ),
-                          Container(
-                            alignment: Alignment.bottomLeft,
-                            padding: EdgeInsets.all(12),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  prov.bDelay != 0
-                                      ? 'Delay: ${prov.bDelay}s'
-                                      : '',
-                                  style: TextStyle(
-                                      color: !prov.aturn
-                                          ? Colors.white
-                                          : Colors.black87,
-                                      fontSize: 12),
-                                ),
-                                Text(
-                                  prov.bInc != 0
-                                      ? 'Increment: ${prov.bInc}s'
-                                      : '',
-                                  style: TextStyle(
-                                      color: !prov.aturn
-                                          ? Colors.white
-                                          : Colors.black87,
-                                      fontSize: 12),
-                                ),
-                              ],
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.bottomLeft,
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              prov.bDelay != 0 ? 'Delay: ${prov.bDelay}s' : '',
+                              style: TextStyle(
+                                  color: !prov.aturn
+                                      ? Colors.white
+                                      : Colors.black87,
+                                  fontSize: 12),
                             ),
-                          )
-                        ],
-                      )))),
-          Expanded(
-            flex: 1,
-            child: Stack(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
+                            Text(
+                              prov.bInc != 0 ? 'Increment: ${prov.bInc}s' : '',
+                              style: TextStyle(
+                                  color: !prov.aturn
+                                      ? Colors.white
+                                      : Colors.black87,
+                                  fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Stack(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
                         alignment: Alignment.center,
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: FloatingActionButton(
@@ -141,99 +143,103 @@ class _PlayingClockState extends State<PlayingClock>
                                   color: Colors.white,
                                 ),
                           onPressed: () => prov.playPressed(),
-                        )),
-                    FloatingActionButton(
-                      elevation: 2,
-                      backgroundColor: Colors.black87,
-                      child: Icon(
-                        Icons.replay,
-                        color: Colors.white,
+                        ),
                       ),
-                      heroTag: 'tag2',
-                      onPressed: () => prov.reset(),
-                    )
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 4),
-                  alignment: Alignment.centerLeft,
-                  child: RotatedBox(
-                    quarterTurns: 1,
-                    child: Text(
-                      'Moves: ${prov.moves}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12,
+                      FloatingActionButton(
+                        elevation: 2,
+                        backgroundColor: Colors.black87,
+                        child: Icon(
+                          Icons.replay,
+                          color: Colors.white,
+                        ),
+                        heroTag: 'tag2',
+                        onPressed: () => prov.reset(),
+                      )
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 4),
+                    alignment: Alignment.centerLeft,
+                    child: RotatedBox(
+                      quarterTurns: 1,
+                      child: Text(
+                        'Moves: ${prov.moves}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Expanded(
-              //A CARD:
-              flex: 4,
-              child: InkWell(
-                  splashColor: prov.aturn ? Colors.orange : Colors.black87,
-                  onTap: () => {
-                        if (!prov.atimeEnded)
-                          {
-                            if (prov.playing)
-                              {
-                                if (prov.aturn) {prov.cardPressed('a')}
-                              }
-                          }
-                      },
-                  child: Stack(
-                    children: <Widget>[
-                      Card(
-                          child: AnimatedContainer(
-                        duration: Duration(milliseconds: 200),
-                        color: prov.atimeEnded
-                            ? Colors.red
-                            : prov.aturn ? Colors.black87 : Colors.grey[300],
-                        child: Center(
-                          child: Text(
-                            prov.atextShown,
-                            style: TextStyle(
-                                fontSize: 60,
-                                color:
-                                    prov.aturn ? Colors.white : Colors.black),
+            Expanded(
+                //A CARD:
+                flex: 4,
+                child: InkWell(
+                    splashColor: prov.aturn ? Colors.orange : Colors.black87,
+                    onTap: () => {
+                          if (!prov.atimeEnded)
+                            {
+                              if (prov.playing)
+                                {
+                                  if (prov.aturn) {prov.cardPressed('a')}
+                                }
+                            }
+                        },
+                    child: Stack(
+                      children: <Widget>[
+                        Card(
+                            child: AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          color: prov.atimeEnded
+                              ? Colors.red
+                              : prov.aturn ? Colors.black87 : Colors.grey[300],
+                          child: Center(
+                            child: Text(
+                              prov.atextShown,
+                              style: TextStyle(
+                                  fontSize: 60,
+                                  color:
+                                      prov.aturn ? Colors.white : Colors.black),
+                            ),
                           ),
-                        ),
-                      )),
-                      Container(
-                          padding: EdgeInsets.all(12),
-                          alignment: Alignment.bottomLeft,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                prov.aDelay != 0
-                                    ? 'Delay: ${prov.aDelay}s'
-                                    : '',
-                                style: TextStyle(
-                                    color: prov.aturn
-                                        ? Colors.white
-                                        : Colors.black87,
-                                    fontSize: 12),
-                              ),
-                              Text(
-                                prov.aInc != 0
-                                    ? 'Increment: ${prov.aInc}s'
-                                    : '',
-                                style: TextStyle(
-                                    color: prov.aturn
-                                        ? Colors.white
-                                        : Colors.black87,
-                                    fontSize: 12),
-                              ),
-                            ],
-                          ))
-                    ],
-                  )))
-        ]));
+                        )),
+                        Container(
+                            padding: EdgeInsets.all(12),
+                            alignment: Alignment.bottomLeft,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  prov.aDelay != 0
+                                      ? 'Delay: ${prov.aDelay}s'
+                                      : '',
+                                  style: TextStyle(
+                                      color: prov.aturn
+                                          ? Colors.white
+                                          : Colors.black87,
+                                      fontSize: 12),
+                                ),
+                                Text(
+                                  prov.aInc != 0
+                                      ? 'Increment: ${prov.aInc}s'
+                                      : '',
+                                  style: TextStyle(
+                                      color: prov.aturn
+                                          ? Colors.white
+                                          : Colors.black87,
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ))
+                      ],
+                    )))
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         accentColor: Colors.orange,
         splashColor: Colors.orange,

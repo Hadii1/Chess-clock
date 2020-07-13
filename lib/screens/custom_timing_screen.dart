@@ -29,7 +29,7 @@ class CustomTimingScreen extends StatelessWidget {
                 child: DelayCard(),
               ),
               Container(
-                padding: EdgeInsets.all(24),
+                padding: EdgeInsets.all(16),
                 child: TextField(
                   maxLength: 12,
                   decoration: InputDecoration(
@@ -39,19 +39,18 @@ class CustomTimingScreen extends StatelessWidget {
                     ),
                     counter: SizedBox.shrink(),
                     labelText: 'Clock Name',
-                    filled: true,
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 0.3,
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 0.3,
                         color: Theme.of(context).accentColor,
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   onChanged: (String value) => prov.clockName = value,
@@ -67,9 +66,9 @@ class CustomTimingScreen extends StatelessWidget {
                   firstChild: Container(
                     width: double.maxFinite,
                     child: RaisedButton(
-                      elevation: 4,
+                      elevation: 2,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       color: Colors.black87,
                       child: Text(
@@ -87,7 +86,7 @@ class CustomTimingScreen extends StatelessWidget {
                     child: RaisedButton(
                       elevation: 4,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       disabledColor: Colors.grey,
                       child: Text(
@@ -147,7 +146,7 @@ class TimeCard extends StatelessWidget {
           children: <Widget>[
             Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: FlatButton(
                 child: Text(
@@ -164,7 +163,7 @@ class TimeCard extends StatelessWidget {
             ),
             Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: FlatButton(
                 child: Text(
@@ -378,7 +377,7 @@ class IncCard extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
               child: FlatButton(
@@ -398,7 +397,7 @@ class IncCard extends StatelessWidget {
           ),
           Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
               child: FlatButton(
@@ -524,7 +523,7 @@ class DelayCard extends StatelessWidget {
           children: <Widget>[
             Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
                 child: FlatButton(
@@ -544,7 +543,7 @@ class DelayCard extends StatelessWidget {
             ),
             Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
                 child: FlatButton(
@@ -668,7 +667,7 @@ class RoundedCheckBox extends StatelessWidget {
           height: 20,
           decoration: BoxDecoration(
             color: value ? Colors.black : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               width: value ? 0 : 1,
               color: Colors.grey,
